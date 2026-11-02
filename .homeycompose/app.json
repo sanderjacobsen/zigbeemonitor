@@ -1,0 +1,66 @@
+{
+  "id": "nl.jacobsen.zigbeemonitor",
+  "version": "0.1.0",
+  "compatibility": ">=12.2.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#1F8A70",
+  "name": {
+    "en": "Zigbee Monitor",
+    "nl": "Zigbee Monitor"
+  },
+  "description": {
+    "en": "Keeps an eye on your Zigbee routers and tells Homey when one stops responding, so a flow can fix it.",
+    "nl": "Houdt je Zigbee-routers in de gaten en meldt het als er één niet meer reageert, zodat een flow het kan herstellen."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [
+    "homey:manager:api"
+  ],
+  "author": {
+    "name": "Sander Jacobsen"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Sander Jacobsen"
+      }
+    ]
+  },
+  "api": {
+    "getRouters": {
+      "method": "GET",
+      "path": "/routers"
+    },
+    "getConfig": {
+      "method": "GET",
+      "path": "/config"
+    },
+    "setConfig": {
+      "method": "PUT",
+      "path": "/config"
+    },
+    "testRouter": {
+      "method": "POST",
+      "path": "/routers/:id/test"
+    },
+    "getLog": {
+      "method": "GET",
+      "path": "/log"
+    }
+  },
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "source": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
+  "homepage": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
+  "bugs": {
+    "url": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor/issues"
+  }
+}

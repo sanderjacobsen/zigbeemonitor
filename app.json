@@ -1,0 +1,503 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "nl.jacobsen.zigbeemonitor",
+  "version": "0.1.0",
+  "compatibility": ">=12.2.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#1F8A70",
+  "name": {
+    "en": "Zigbee Monitor",
+    "nl": "Zigbee Monitor"
+  },
+  "description": {
+    "en": "Keeps an eye on your Zigbee routers and tells Homey when one stops responding, so a flow can fix it.",
+    "nl": "Houdt je Zigbee-routers in de gaten en meldt het als er één niet meer reageert, zodat een flow het kan herstellen."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [
+    "homey:manager:api"
+  ],
+  "author": {
+    "name": "Sander Jacobsen"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Sander Jacobsen"
+      }
+    ]
+  },
+  "api": {
+    "getRouters": {
+      "method": "GET",
+      "path": "/routers"
+    },
+    "getConfig": {
+      "method": "GET",
+      "path": "/config"
+    },
+    "setConfig": {
+      "method": "PUT",
+      "path": "/config"
+    },
+    "testRouter": {
+      "method": "POST",
+      "path": "/routers/:id/test"
+    },
+    "getLog": {
+      "method": "GET",
+      "path": "/log"
+    }
+  },
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "source": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
+  "homepage": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
+  "bugs": {
+    "url": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor/issues"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "A router does not respond",
+          "nl": "Een router reageert niet"
+        },
+        "titleFormatted": {
+          "en": "[[router]] does not respond",
+          "nl": "[[router]] reageert niet"
+        },
+        "hint": {
+          "en": "Fires once when a monitored Zigbee router failed the test several times in a row.",
+          "nl": "Gaat één keer af als een bewaakte Zigbee-router meerdere keren achter elkaar niet reageerde op de test."
+        },
+        "args": [
+          {
+            "name": "router",
+            "type": "autocomplete",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "placeholder": {
+              "en": "All routers",
+              "nl": "Alle routers"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "device",
+            "type": "string",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "example": {
+              "en": "Hall lamp",
+              "nl": "Lamp gang"
+            }
+          },
+          {
+            "name": "zone",
+            "type": "string",
+            "title": {
+              "en": "Zone",
+              "nl": "Zone"
+            },
+            "example": {
+              "en": "Hall",
+              "nl": "Gang"
+            }
+          },
+          {
+            "name": "app",
+            "type": "string",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "example": "Philips Hue (without bridge)"
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": "Timeout"
+          }
+        ],
+        "id": "router_down"
+      },
+      {
+        "title": {
+          "en": "A router of an app does not respond",
+          "nl": "Een router van een app reageert niet"
+        },
+        "titleFormatted": {
+          "en": "A router of [[app]] does not respond",
+          "nl": "Een router van [[app]] reageert niet"
+        },
+        "hint": {
+          "en": "Use this to restart that app with Homey's 'Restart app' card.",
+          "nl": "Gebruik dit om die app te herstarten met Homey's kaart 'Herstart app'."
+        },
+        "args": [
+          {
+            "name": "app",
+            "type": "autocomplete",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "placeholder": {
+              "en": "Choose an app",
+              "nl": "Kies een app"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "device",
+            "type": "string",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "example": {
+              "en": "Hall lamp",
+              "nl": "Lamp gang"
+            }
+          },
+          {
+            "name": "zone",
+            "type": "string",
+            "title": {
+              "en": "Zone",
+              "nl": "Zone"
+            },
+            "example": {
+              "en": "Hall",
+              "nl": "Gang"
+            }
+          },
+          {
+            "name": "app",
+            "type": "string",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "example": "Philips Hue (without bridge)"
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": "Timeout"
+          }
+        ],
+        "id": "router_down_app"
+      },
+      {
+        "title": {
+          "en": "A router responds again",
+          "nl": "Een router reageert weer"
+        },
+        "titleFormatted": {
+          "en": "[[router]] responds again",
+          "nl": "[[router]] reageert weer"
+        },
+        "args": [
+          {
+            "name": "router",
+            "type": "autocomplete",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "placeholder": {
+              "en": "All routers",
+              "nl": "Alle routers"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "device",
+            "type": "string",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "example": {
+              "en": "Hall lamp",
+              "nl": "Lamp gang"
+            }
+          },
+          {
+            "name": "zone",
+            "type": "string",
+            "title": {
+              "en": "Zone",
+              "nl": "Zone"
+            },
+            "example": {
+              "en": "Hall",
+              "nl": "Gang"
+            }
+          },
+          {
+            "name": "app",
+            "type": "string",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "example": "Philips Hue (without bridge)"
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": "Timeout"
+          }
+        ],
+        "id": "router_up"
+      }
+    ],
+    "conditions": [
+      {
+        "title": {
+          "en": "Router responds",
+          "nl": "Router reageert"
+        },
+        "titleFormatted": {
+          "en": "[[router]] !{{responds|does not respond}}",
+          "nl": "[[router]] !{{reageert|reageert niet}}"
+        },
+        "hint": {
+          "en": "Tests the router right now (takes a few seconds).",
+          "nl": "Test de router direct (duurt een paar seconden)."
+        },
+        "args": [
+          {
+            "name": "router",
+            "type": "autocomplete",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "placeholder": {
+              "en": "Choose a router",
+              "nl": "Kies een router"
+            }
+          }
+        ],
+        "id": "router_responds"
+      },
+      {
+        "title": {
+          "en": "Zigbee Monitor is running longer than",
+          "nl": "Zigbee Monitor draait langer dan"
+        },
+        "titleFormatted": {
+          "en": "Zigbee Monitor is !{{|not}} running longer than [[minutes]] minutes",
+          "nl": "Zigbee Monitor draait !{{|niet}} langer dan [[minutes]] minuten"
+        },
+        "hint": {
+          "en": "Use before 'Restart Homey' to restart at most once in that period (the app starts again after a restart).",
+          "nl": "Gebruik dit vóór 'Herstart Homey', zodat Homey hooguit één keer in die periode herstart (de app start na een herstart opnieuw)."
+        },
+        "args": [
+          {
+            "name": "minutes",
+            "type": "number",
+            "min": 1,
+            "max": 1440,
+            "title": {
+              "en": "Minutes",
+              "nl": "Minuten"
+            },
+            "placeholder": {
+              "en": "60",
+              "nl": "60"
+            }
+          }
+        ],
+        "id": "running_longer_than"
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Test all routers now",
+          "nl": "Test alle routers nu"
+        },
+        "id": "test_all"
+      },
+      {
+        "title": {
+          "en": "Test the routers of an app now",
+          "nl": "Test de routers van een app nu"
+        },
+        "titleFormatted": {
+          "en": "Test the routers of [[app]] now",
+          "nl": "Test de routers van [[app]] nu"
+        },
+        "args": [
+          {
+            "name": "app",
+            "type": "autocomplete",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "placeholder": {
+              "en": "Choose an app",
+              "nl": "Kies een app"
+            }
+          }
+        ],
+        "id": "test_app"
+      },
+      {
+        "title": {
+          "en": "Test a router now",
+          "nl": "Test een router nu"
+        },
+        "titleFormatted": {
+          "en": "Test [[router]] now",
+          "nl": "Test [[router]] nu"
+        },
+        "args": [
+          {
+            "name": "router",
+            "type": "autocomplete",
+            "title": {
+              "en": "Router",
+              "nl": "Router"
+            },
+            "placeholder": {
+              "en": "Choose a router",
+              "nl": "Kies een router"
+            }
+          }
+        ],
+        "id": "test_router"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Zigbee Monitor (overview)",
+        "nl": "Zigbee Monitor (overzicht)"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_zigbee",
+        "zigbee_down",
+        "zigbee_monitored",
+        "zigbee_last"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/overview/assets/images/small.png",
+        "large": "/drivers/overview/assets/images/large.png",
+        "xlarge": "/drivers/overview/assets/images/xlarge.png"
+      },
+      "id": "overview"
+    }
+  ],
+  "capabilities": {
+    "alarm_zigbee": {
+      "type": "boolean",
+      "title": {
+        "en": "Router not responding",
+        "nl": "Router reageert niet"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Router not responding",
+        "nl": "Router reageert niet"
+      },
+      "insightsTitleFalse": {
+        "en": "All routers respond",
+        "nl": "Alle routers reageren"
+      },
+      "icon": "/assets/capabilities/alarm.svg"
+    },
+    "zigbee_down": {
+      "type": "number",
+      "title": {
+        "en": "Not responding",
+        "nl": "Reageert niet"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/down.svg"
+    },
+    "zigbee_last": {
+      "type": "string",
+      "title": {
+        "en": "Last event",
+        "nl": "Laatste gebeurtenis"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/last.svg"
+    },
+    "zigbee_monitored": {
+      "type": "number",
+      "title": {
+        "en": "Monitored routers",
+        "nl": "Bewaakte routers"
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/capabilities/router.svg"
+    }
+  }
+}

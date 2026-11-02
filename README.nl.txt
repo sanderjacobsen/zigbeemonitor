@@ -1,0 +1,5 @@
+Zigbee Monitor houdt je Zigbee-routers in de gaten: de apparaten op netstroom (lampen, stekkers, relais) die de signalen van je andere Zigbee-apparaten doorgeven. Om de paar minuten krijgt elke router zijn huidige stand opnieuw. Er verandert niets, maar het commando gaat echt over Zigbee, zodat een router die niet meer reageert opvalt voordat jij het merkt.
+
+Reageert een router een paar keer achter elkaar niet, dan krijg je een melding en kan een flow het herstellen: de app van die router herstarten met Homey's eigen kaart 'Herstart app', opnieuw testen en zo nodig Homey herstarten.
+
+Werkt met routers van elke app (Philips Hue zonder bridge, IKEA, Aqara en meer). Eén overzichtsapparaat toont een rood bolletje als een router niet reageert.

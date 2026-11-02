@@ -1,0 +1,6 @@
+{
+  "0.1.0": {
+    "en": "First version: tests your Zigbee routers (any app), notifies when one stops responding and offers flow cards to repair it with Homey's 'Restart app' card.",
+    "nl": "Eerste versie: test je Zigbee-routers (van elke app), meldt het als er één niet meer reageert en heeft flowkaarten om het te herstellen met Homey's kaart 'Herstart app'."
+  }
+}

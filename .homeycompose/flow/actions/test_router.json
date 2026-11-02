@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Test a router now",
+    "nl": "Test een router nu"
+  },
+  "titleFormatted": {
+    "en": "Test [[router]] now",
+    "nl": "Test [[router]] nu"
+  },
+  "args": [
+    {
+      "name": "router",
+      "type": "autocomplete",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "placeholder": {
+        "en": "Choose a router",
+        "nl": "Kies een router"
+      }
+    }
+  ]
+}

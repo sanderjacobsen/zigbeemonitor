@@ -1,0 +1,72 @@
+{
+  "title": {
+    "en": "A router does not respond",
+    "nl": "Een router reageert niet"
+  },
+  "titleFormatted": {
+    "en": "[[router]] does not respond",
+    "nl": "[[router]] reageert niet"
+  },
+  "hint": {
+    "en": "Fires once when a monitored Zigbee router failed the test several times in a row.",
+    "nl": "Gaat één keer af als een bewaakte Zigbee-router meerdere keren achter elkaar niet reageerde op de test."
+  },
+  "args": [
+    {
+      "name": "router",
+      "type": "autocomplete",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "placeholder": {
+        "en": "All routers",
+        "nl": "Alle routers"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "example": {
+        "en": "Hall lamp",
+        "nl": "Lamp gang"
+      }
+    },
+    {
+      "name": "zone",
+      "type": "string",
+      "title": {
+        "en": "Zone",
+        "nl": "Zone"
+      },
+      "example": {
+        "en": "Hall",
+        "nl": "Gang"
+      }
+    },
+    {
+      "name": "app",
+      "type": "string",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "example": "Philips Hue (without bridge)"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "example": "Timeout"
+    }
+  ]
+}

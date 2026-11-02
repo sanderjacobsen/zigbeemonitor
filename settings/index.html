@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <style>
+    /* Only layout; colours, fonts, buttons and form fields come from Homey's own styleguide (homey.css). Same look as Maintenance Monitor. */
+    .hidden { display: none !important; }
+    .ha-section { font-size: var(--homey-font-size-small); color: var(--homey-color-text-light); margin: var(--homey-su-3) 2px var(--homey-su-1); }
+    .ha-card { background: var(--homey-color-component); border-radius: var(--homey-border-radius); box-shadow: var(--homey-box-shadow-light); margin-bottom: 12px; overflow: hidden; }
+    .ha-pad { padding: 12px 14px; }
+    .ha-sub { font-size: var(--homey-font-size-small); color: var(--homey-color-text-light); line-height: 20px; }
+    .ha-head { display: flex; align-items: center; gap: 12px; padding: 14px; }
+    .ha-head .name { font-size: var(--homey-font-size-medium); font-weight: var(--homey-font-weight-medium); line-height: 26px; }
+    .ha-head .ha-state { margin-left: auto; }
+    .ha-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--homey-color-line); }
+    .ha-row:first-child { border-top: none; }
+    .ha-row .homey-form-checkbox { margin: 0; }
+    .ha-row .homey-form-input { width: 70px !important; }
+    .ha-inline { display: flex; align-items: center; gap: 8px; }
+    .ha-inline span { color: var(--homey-color-text-light); font-size: var(--homey-font-size-small); }
+    .zm-router { display: grid; grid-template-columns: auto 1fr auto auto; gap: 10px; align-items: center; padding: 12px 14px; border-top: 1px solid var(--homey-color-line); }
+    .zm-router .homey-form-checkbox { margin: 0; }
+    .zm-router .title { font-weight: var(--homey-font-weight-medium); }
+    .zm-router .meta { font-size: var(--homey-font-size-small); color: var(--homey-color-text-light); line-height: 20px; }
+    .zm-router .meta.err { color: #d81c1d; }
+    .zm-router.off .title, .zm-router.off .meta { opacity: .55; }
+    .ha-state { width: 24px; height: 24px; flex: 0 0 auto; }
+    .ha-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 10px 14px; }
+    .ha-legend span { display: inline-flex; align-items: center; gap: 6px; font-size: var(--homey-font-size-small); color: var(--homey-color-text-light); }
+    .ha-legend .ha-state { width: 18px; height: 18px; }
+    .zm-log { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; padding: 10px 14px; border-top: 1px solid var(--homey-color-line); }
+    .zm-log:first-child { border-top: none; }
+    .zm-log .ha-state { width: 18px; height: 18px; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <h1 class="homey-title" data-i18n="settings.title"></h1>
+  <p class="homey-subtitle" data-i18n="settings.intro"></p>
+
+  <div class="ha-section" data-i18n="settings.monitoring"></div>
+  <div class="ha-card">
+    <div class="ha-row"><span data-i18n="settings.interval"></span>
+      <div class="ha-inline"><input class="homey-form-input" type="number" inputmode="numeric" min="1" max="120" id="intervalMin" /><span data-i18n="settings.minutes"></span></div></div>
+    <div class="ha-row"><span data-i18n="settings.fails"></span>
+      <div class="ha-inline"><input class="homey-form-input" type="number" inputmode="numeric" min="1" max="5" id="failsBeforeAlarm" /><span data-i18n="settings.times"></span></div></div>
+    <div class="ha-row"><label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" id="notifyDown" /><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text" data-i18n="settings.notify_down"></span></label></div>
+    <div class="ha-row"><label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" id="notifyUp" /><span class="homey-form-checkbox-checkmark"></span><span class="homey-form-checkbox-text" data-i18n="settings.notify_up"></span></label></div>
+  </div>
+
+  <div class="ha-section" data-i18n="settings.routers"></div>
+  <input class="homey-form-input" type="text" inputmode="search" enterkeyhint="search" id="search" autocomplete="off" style="margin-bottom:12px" />
+  <button class="homey-button-primary-shadow-full" id="testAll" style="margin-bottom:12px" data-i18n="settings.test_all"></button>
+  <div id="routers"></div>
+
+  <div class="ha-section" data-i18n="settings.log"></div>
+  <div class="ha-card" id="log"></div>
+
+  <div class="ha-section" data-i18n="settings.repair"></div>
+  <div class="ha-card ha-pad"><p class="ha-sub" data-i18n="settings.repair_text"></p></div>
+
+<script>
+  let H; let routers = []; let config = {}; let query = '';
+  const busy = new Set();
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const t = (key, vars) => H.__(key, vars);
+  const api = (method, path, body) => new Promise((resolve, reject) => H.api(method, path, body || null, (err, res) => (err ? reject(err) : resolve(res))));
+  const time = ms => new Date(ms).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+  // Status icons: round badges in Homey's colours (same as Maintenance Monitor).
+  const STATE_ICON = {
+    ok: '<circle cx="12" cy="12" r="11" fill="#3fc700"/><path d="m7 12.3 3.2 3.2L17 8.7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    suspect: '<circle cx="12" cy="12" r="11" fill="#f5a623"/><path d="M12 6.8V12l3.4 2.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    down: '<circle cx="12" cy="12" r="11" fill="#d81c1d"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.4" fill="#fff"/>',
+    unknown: '<circle cx="12" cy="12" r="11" fill="#b8bcc4"/><circle cx="8" cy="12" r="1.5" fill="#fff"/><circle cx="12" cy="12" r="1.5" fill="#fff"/><circle cx="16" cy="12" r="1.5" fill="#fff"/>',
+  };
+  const stateIcon = s => `<svg class="ha-state" viewBox="0 0 24 24" role="img" aria-label="${esc(t('status.' + s))}"><title>${esc(t('status.' + s))}</title>${STATE_ICON[s] || STATE_ICON.unknown}</svg>`;
+
+  function meta(r) {
+    if (!r.capability) return `<div class="meta">${esc([r.zone, t('settings.not_testable')].filter(Boolean).join(' · '))}</div>`;
+    const s = r.state || {};
+    const parts = [r.zone, r.product];
+    if (busy.has(r.id)) parts.push(t('settings.testing'));
+    else if (s.lastCheck) parts.push(`${t('settings.last_test')} ${time(s.lastCheck)}${s.lastMs != null && s.status === 'ok' ? ` (${(s.lastMs / 1000).toFixed(1)} s)` : ''}`);
+    else parts.push(t('settings.never'));
+    const err = s.status !== 'ok' && s.lastError ? `<div class="meta err">${esc(s.lastError)}</div>` : '';
+    return `<div class="meta">${esc(parts.filter(Boolean).join(' · '))}</div>${err}`;
+  }
+
+  function matches(r) {
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const text = [r.name, r.zone, r.appName, r.product].join(' ').toLowerCase();
+    return words.every(w => text.includes(w));
+  }
+
+  function render() {
+    if (!routers.length) { $('routers').innerHTML = `<div class="ha-card ha-pad ha-sub">${esc(t('settings.no_routers'))}</div>`; return; }
+    const shown = routers.filter(matches);
+    if (!shown.length) { $('routers').innerHTML = `<div class="ha-card ha-pad ha-sub">${esc(t('settings.no_results', { query }))}</div>`; return; }
+    const apps = [...new Set(shown.map(r => r.appName))];
+    $('routers').innerHTML = apps.map(app => {
+      const list = shown.filter(r => r.appName === app);
+      const worst = list.filter(r => r.monitored).map(r => r.state.status).reduce((w, s) => (['ok', 'unknown', 'suspect', 'down'].indexOf(s) > ['ok', 'unknown', 'suspect', 'down'].indexOf(w) ? s : w), 'ok');
+      return `<div class="ha-card">
+        <div class="ha-head"><div><div class="name">${esc(app)}</div><div class="ha-sub">${list.filter(r => r.monitored).length} / ${list.length} ${esc(t('settings.monitored'))}</div></div>${stateIcon(worst)}</div>
+        ${list.map(r => `<div class="zm-router ${r.monitored ? '' : 'off'}" data-id="${esc(r.id)}">
+          <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" data-act="monitor" ${r.monitored ? 'checked' : ''} ${r.capability ? '' : 'disabled'} /><span class="homey-form-checkbox-checkmark"></span></label>
+          <div><div class="title">${esc(r.name)}</div>${meta(r)}</div>
+          ${r.monitored && r.capability ? stateIcon(r.state.status) : '<span></span>'}
+          <button class="homey-button-secondary-small-shadow" data-act="test" ${r.capability && !busy.has(r.id) ? '' : 'disabled'}>${esc(t('settings.test'))}</button>
+        </div>`).join('')}
+      </div>`;
+    }).join('') + `<div class="ha-card ha-legend">${['ok', 'suspect', 'down', 'unknown'].map(s => `<span>${stateIcon(s)}${esc(t('status.' + s))}</span>`).join('')}</div>`;
+  }
+
+  async function renderLog() {
+    const log = await api('GET', '/log');
+    $('log').innerHTML = log.length
+      ? log.slice(0, 20).map(e => `<div class="zm-log">${stateIcon(e.event === 'down' ? 'down' : 'ok')}
+          <div><b>${esc(e.device)}</b> <span class="ha-sub">${esc([e.zone, e.app].filter(Boolean).join(' · '))}</span>
+          <div class="ha-sub">${esc(time(e.t))} · ${esc(t('overview.' + e.event))}${e.detail && e.event === 'down' ? ` · ${esc(e.detail)}` : ''}</div></div></div>`).join('')
+      : `<div class="ha-pad ha-sub">${esc(t('settings.log_empty'))}</div>`;
+  }
+
+  async function saveConfig(changes) {
+    config = await api('PUT', '/config', { ...config, ...changes });
+  }
+
+  async function test(id) {
+    busy.add(id); render();
+    try {
+      const state = await api('POST', `/routers/${encodeURIComponent(id)}/test`);
+      routers.find(r => r.id === id).state = state;
+    } catch (err) { H.alert(err.message || String(err)); }
+    busy.delete(id); render(); renderLog();
+  }
+
+  async function onClick(ev) {
+    const el = ev.target.closest('[data-act]');
+    if (!el) return;
+    const id = el.closest('[data-id]').dataset.id;
+    if (el.dataset.act === 'test') await test(id);
+  }
+
+  async function onChange(ev) {
+    const el = ev.target.closest('[data-act="monitor"]');
+    if (!el) return;
+    const id = el.closest('[data-id]').dataset.id;
+    routers.find(r => r.id === id).monitored = el.checked;
+    await saveConfig({ monitored: routers.filter(r => r.monitored).map(r => r.id) });
+    render();
+  }
+
+  async function load() {
+    [routers, config] = await Promise.all([api('GET', '/routers'), api('GET', '/config')]);
+    $('intervalMin').value = config.intervalMin;
+    $('failsBeforeAlarm').value = config.failsBeforeAlarm;
+    $('notifyDown').checked = config.notifyDown;
+    $('notifyUp').checked = config.notifyUp;
+    render();
+    await renderLog();
+  }
+
+  function onHomeyReady(Homey) {
+    H = Homey;
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+    $('search').placeholder = t('settings.search');
+    $('search').addEventListener('input', () => { query = $('search').value.trim(); render(); });
+    $('routers').addEventListener('click', onClick);
+    $('routers').addEventListener('change', onChange);
+    for (const id of ['intervalMin', 'failsBeforeAlarm']) $(id).addEventListener('change', () => saveConfig({ [id]: Number($(id).value) }));
+    for (const id of ['notifyDown', 'notifyUp']) $(id).addEventListener('change', () => saveConfig({ [id]: $(id).checked }));
+    $('testAll').addEventListener('click', async () => {
+      for (const r of routers.filter(x => x.monitored && x.capability)) await test(r.id);
+    });
+    load().catch(err => H.alert(err.message || String(err))).finally(() => H.ready());
+  }
+</script>
+</body>
+</html>

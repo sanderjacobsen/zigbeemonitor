@@ -1,0 +1,72 @@
+{
+  "title": {
+    "en": "A router of an app does not respond",
+    "nl": "Een router van een app reageert niet"
+  },
+  "titleFormatted": {
+    "en": "A router of [[app]] does not respond",
+    "nl": "Een router van [[app]] reageert niet"
+  },
+  "hint": {
+    "en": "Use this to restart that app with Homey's 'Restart app' card.",
+    "nl": "Gebruik dit om die app te herstarten met Homey's kaart 'Herstart app'."
+  },
+  "args": [
+    {
+      "name": "app",
+      "type": "autocomplete",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "placeholder": {
+        "en": "Choose an app",
+        "nl": "Kies een app"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "example": {
+        "en": "Hall lamp",
+        "nl": "Lamp gang"
+      }
+    },
+    {
+      "name": "zone",
+      "type": "string",
+      "title": {
+        "en": "Zone",
+        "nl": "Zone"
+      },
+      "example": {
+        "en": "Hall",
+        "nl": "Gang"
+      }
+    },
+    {
+      "name": "app",
+      "type": "string",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "example": "Philips Hue (without bridge)"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "example": "Timeout"
+    }
+  ]
+}

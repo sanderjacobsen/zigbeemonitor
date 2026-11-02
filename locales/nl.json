@@ -1,0 +1,54 @@
+{
+  "notify": {
+    "down": "📡 __device__ (__zone__) reageert niet meer. App: __app__.",
+    "up": "📡 __device__ (__zone__) reageert weer."
+  },
+  "error": {
+    "no_capability": "Dit apparaat heeft geen aan/uit of dimmer om mee te testen",
+    "unavailable": "Apparaat niet beschikbaar",
+    "timeout": "Geen antwoord binnen 15 seconden",
+    "not_found": "Router niet gevonden"
+  },
+  "overview": {
+    "name": "Zigbee Monitor",
+    "down": "Reageert niet",
+    "up": "Reageert weer",
+    "none": "Nog niets gebeurd"
+  },
+  "flow": {
+    "any_router": "Alle routers"
+  },
+  "settings": {
+    "title": "Zigbee Monitor",
+    "intro": "Test regelmatig of je Zigbee-routers (apparaten op netstroom) nog reageren. Er verandert niets aan het apparaat: het krijgt zijn huidige stand opnieuw.",
+    "monitoring": "Bewaking",
+    "interval": "Test elke",
+    "minutes": "minuten",
+    "fails": "Melden na",
+    "times": "keer niet reageren",
+    "notify_down": "Melding als een router niet reageert",
+    "notify_up": "Melding als een router weer reageert",
+    "routers": "Routers",
+    "search": "Zoek op naam, ruimte of app",
+    "test": "Test",
+    "test_all": "Test alle routers nu",
+    "testing": "Bezig…",
+    "never": "nog niet getest",
+    "last_test": "getest",
+    "no_routers": "Geen Zigbee-routers gevonden.",
+    "no_results": "Geen routers gevonden voor '__query__'.",
+    "not_testable": "kan niet getest worden (geen aan/uit of dimmer)",
+    "monitored": "bewaakt",
+    "log": "Logboek",
+    "log_empty": "Nog geen gebeurtenissen.",
+    "saved": "Opgeslagen",
+    "repair": "Automatisch herstellen",
+    "repair_text": "Maak een Advanced Flow: 'Een router van [app] reageert niet' → Homey's kaart 'Herstart app' (Systeem › Apps) → wacht 30 seconden → voorwaarde '[router] reageert'. Reageert hij nog niet: 'Zigbee Monitor draait langer dan 60 minuten' → 'Herstart Homey' (Systeem). Apps mogen andere apps of Homey zelf niet herstarten, daarom gebeurt dat in een flow."
+  },
+  "status": {
+    "ok": "reageert",
+    "suspect": "reageerde net niet, wordt opnieuw getest",
+    "down": "reageert niet",
+    "unknown": "nog niet getest"
+  }
+}

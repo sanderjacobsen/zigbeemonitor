@@ -1,0 +1,24 @@
+{
+  "title": {
+    "en": "Test the routers of an app now",
+    "nl": "Test de routers van een app nu"
+  },
+  "titleFormatted": {
+    "en": "Test the routers of [[app]] now",
+    "nl": "Test de routers van [[app]] nu"
+  },
+  "args": [
+    {
+      "name": "app",
+      "type": "autocomplete",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "placeholder": {
+        "en": "Choose an app",
+        "nl": "Kies een app"
+      }
+    }
+  ]
+}

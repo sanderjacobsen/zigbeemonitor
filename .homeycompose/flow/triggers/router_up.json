@@ -1,0 +1,68 @@
+{
+  "title": {
+    "en": "A router responds again",
+    "nl": "Een router reageert weer"
+  },
+  "titleFormatted": {
+    "en": "[[router]] responds again",
+    "nl": "[[router]] reageert weer"
+  },
+  "args": [
+    {
+      "name": "router",
+      "type": "autocomplete",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "placeholder": {
+        "en": "All routers",
+        "nl": "Alle routers"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "example": {
+        "en": "Hall lamp",
+        "nl": "Lamp gang"
+      }
+    },
+    {
+      "name": "zone",
+      "type": "string",
+      "title": {
+        "en": "Zone",
+        "nl": "Zone"
+      },
+      "example": {
+        "en": "Hall",
+        "nl": "Gang"
+      }
+    },
+    {
+      "name": "app",
+      "type": "string",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "example": "Philips Hue (without bridge)"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "example": "Timeout"
+    }
+  ]
+}

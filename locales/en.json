@@ -1,0 +1,54 @@
+{
+  "notify": {
+    "down": "📡 __device__ (__zone__) stopped responding. App: __app__.",
+    "up": "📡 __device__ (__zone__) responds again."
+  },
+  "error": {
+    "no_capability": "This device has no on/off or dimmer to test with",
+    "unavailable": "Device unavailable",
+    "timeout": "No answer within 15 seconds",
+    "not_found": "Router not found"
+  },
+  "overview": {
+    "name": "Zigbee Monitor",
+    "down": "Not responding",
+    "up": "Responds again",
+    "none": "Nothing happened yet"
+  },
+  "flow": {
+    "any_router": "All routers"
+  },
+  "settings": {
+    "title": "Zigbee Monitor",
+    "intro": "Regularly tests whether your Zigbee routers (mains-powered devices) still respond. Nothing changes on the device: it gets its current state again.",
+    "monitoring": "Monitoring",
+    "interval": "Test every",
+    "minutes": "minutes",
+    "fails": "Alert after",
+    "times": "failed tests in a row",
+    "notify_down": "Notify when a router stops responding",
+    "notify_up": "Notify when a router responds again",
+    "routers": "Routers",
+    "search": "Search by name, zone or app",
+    "test": "Test",
+    "test_all": "Test all routers now",
+    "testing": "Testing…",
+    "never": "not tested yet",
+    "last_test": "tested",
+    "no_routers": "No Zigbee routers found.",
+    "no_results": "No routers found for '__query__'.",
+    "not_testable": "cannot be tested (no on/off or dimmer)",
+    "monitored": "monitored",
+    "log": "Log",
+    "log_empty": "No events yet.",
+    "saved": "Saved",
+    "repair": "Repair automatically",
+    "repair_text": "Create an Advanced Flow: 'A router of [app] does not respond' → Homey's 'Restart app' card (System › Apps) → wait 30 seconds → condition '[router] responds'. Still not responding: 'Zigbee Monitor is running longer than 60 minutes' → 'Restart Homey' (System). Apps are not allowed to restart other apps or Homey itself, so this is done in a flow."
+  },
+  "status": {
+    "ok": "responds",
+    "suspect": "just failed, testing again",
+    "down": "does not respond",
+    "unknown": "not tested yet"
+  }
+}

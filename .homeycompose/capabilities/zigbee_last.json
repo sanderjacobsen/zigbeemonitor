@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Last event",
+    "nl": "Laatste gebeurtenis"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/last.svg"
+}

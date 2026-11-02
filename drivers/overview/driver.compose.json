@@ -1,0 +1,15 @@
+{
+  "name": { "en": "Zigbee Monitor (overview)", "nl": "Zigbee Monitor (overzicht)" },
+  "class": "sensor",
+  "capabilities": ["alarm_zigbee", "zigbee_down", "zigbee_monitored", "zigbee_last"],
+  "platforms": ["local"],
+  "pair": [
+    { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },
+    { "id": "add_devices", "template": "add_devices" }
+  ],
+  "images": {
+    "small": "/drivers/overview/assets/images/small.png",
+    "large": "/drivers/overview/assets/images/large.png",
+    "xlarge": "/drivers/overview/assets/images/xlarge.png"
+  }
+}

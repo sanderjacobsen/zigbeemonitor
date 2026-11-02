@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Router responds",
+    "nl": "Router reageert"
+  },
+  "titleFormatted": {
+    "en": "[[router]] !{{responds|does not respond}}",
+    "nl": "[[router]] !{{reageert|reageert niet}}"
+  },
+  "hint": {
+    "en": "Tests the router right now (takes a few seconds).",
+    "nl": "Test de router direct (duurt een paar seconden)."
+  },
+  "args": [
+    {
+      "name": "router",
+      "type": "autocomplete",
+      "title": {
+        "en": "Router",
+        "nl": "Router"
+      },
+      "placeholder": {
+        "en": "Choose a router",
+        "nl": "Kies een router"
+      }
+    }
+  ]
+}

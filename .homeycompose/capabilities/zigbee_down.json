@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Not responding",
+    "nl": "Reageert niet"
+  },
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/down.svg"
+}

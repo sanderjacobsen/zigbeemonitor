@@ -1,0 +1,30 @@
+{
+  "title": {
+    "en": "Zigbee Monitor is running longer than",
+    "nl": "Zigbee Monitor draait langer dan"
+  },
+  "titleFormatted": {
+    "en": "Zigbee Monitor is !{{|not}} running longer than [[minutes]] minutes",
+    "nl": "Zigbee Monitor draait !{{|niet}} langer dan [[minutes]] minuten"
+  },
+  "hint": {
+    "en": "Use before 'Restart Homey' to restart at most once in that period (the app starts again after a restart).",
+    "nl": "Gebruik dit vóór 'Herstart Homey', zodat Homey hooguit één keer in die periode herstart (de app start na een herstart opnieuw)."
+  },
+  "args": [
+    {
+      "name": "minutes",
+      "type": "number",
+      "min": 1,
+      "max": 1440,
+      "title": {
+        "en": "Minutes",
+        "nl": "Minuten"
+      },
+      "placeholder": {
+        "en": "60",
+        "nl": "60"
+      }
+    }
+  ]
+}

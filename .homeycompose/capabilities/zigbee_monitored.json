@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Monitored routers",
+    "nl": "Bewaakte routers"
+  },
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/router.svg"
+}

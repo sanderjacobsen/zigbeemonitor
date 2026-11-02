@@ -1,0 +1,20 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Router not responding",
+    "nl": "Router reageert niet"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Router not responding",
+    "nl": "Router reageert niet"
+  },
+  "insightsTitleFalse": {
+    "en": "All routers respond",
+    "nl": "Alle routers reageren"
+  },
+  "icon": "/assets/capabilities/alarm.svg"
+}
