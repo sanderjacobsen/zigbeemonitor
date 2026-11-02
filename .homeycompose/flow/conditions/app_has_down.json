@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "A router of an app still does not respond",
+    "nl": "Een router van een app reageert nog niet"
+  },
+  "titleFormatted": {
+    "en": "A router of [[app]] !{{still does not respond|responds again}}",
+    "nl": "Een router van [[app]] !{{reageert nog niet|reageert weer}}"
+  },
+  "hint": {
+    "en": "Tests the routers of this app that did not respond, right now.",
+    "nl": "Test direct opnieuw de routers van deze app die niet reageerden."
+  },
+  "args": [
+    {
+      "name": "app",
+      "type": "autocomplete",
+      "title": {
+        "en": "App",
+        "nl": "App"
+      },
+      "placeholder": {
+        "en": "Choose an app",
+        "nl": "Kies een app"
+      }
+    }
+  ]
+}

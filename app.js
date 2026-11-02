@@ -230,6 +230,15 @@ class ZigbeeMonitorApp extends Homey.App {
     responds.registerArgumentAutocompleteListener('router', query => routers(query, false));
     responds.registerRunListener(async ({ router }) => (await this.testRouter(await this._routerById(router.id))).status === 'ok');
 
+    const appDown = this.homey.flow.getConditionCard('app_has_down');
+    appDown.registerArgumentAutocompleteListener('app', apps);
+    appDown.registerRunListener(async ({ app }) => {
+      const failing = (await this.getRouters()).filter(r => r.monitored && r.appId === app.id && r.state.status !== 'ok' && r.state.status !== 'unknown');
+      let still = false;
+      for (const router of failing) if ((await this.testRouter(router)).status !== 'ok') still = true;
+      return still;
+    });
+
     const uptime = this.homey.flow.getConditionCard('running_longer_than');
     uptime.registerRunListener(async ({ minutes }) => Date.now() - this.startedAt >= (Number(minutes) || 0) * 60 * 1000);
 
