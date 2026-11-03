@@ -1,6 +1,6 @@
 {
   "name": "nl.jacobsen.zigbeemonitor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zigbee Monitor: tests your Zigbee routers and tells Homey when one stops responding (Homey app)",
   "main": "app.js",
   "scripts": { "test": "node test/monitor.test.js" },
