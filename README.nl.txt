@@ -3,3 +3,5 @@ Zigbee Monitor houdt je Zigbee-routers in de gaten: de apparaten op netstroom (l
 Reageert een router een paar keer achter elkaar niet, dan krijg je een melding en kan een flow het herstellen: de app van die router herstarten met Homey's eigen kaart 'Herstart app', opnieuw testen en zo nodig Homey herstarten.
 
 Werkt met routers van elke app (Philips Hue zonder bridge, IKEA, Aqara en meer). Eén overzichtsapparaat toont een rood bolletje als een router niet reageert.
+
+Zigbee-logo: Simple Icons (simpleicons.org, CC0); Zigbee is een handelsmerk van de Connectivity Standards Alliance.

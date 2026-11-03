@@ -3,3 +3,5 @@ Zigbee Monitor keeps an eye on your Zigbee routers: the mains-powered devices (l
 When a router does not respond several times in a row, you get a notification and a flow can repair it: restart the app of that router with Homey's own 'Restart app' card, test again, and if needed restart Homey.
 
 Works with routers of any app (Philips Hue without bridge, IKEA, Aqara and more). One overview device shows a red dot when a router does not respond.
+
+Zigbee logo: Simple Icons (simpleicons.org, CC0); Zigbee is a trademark of the Connectivity Standards Alliance.
