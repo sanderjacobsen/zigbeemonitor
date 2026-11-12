@@ -14,5 +14,9 @@
   "0.1.3": {
     "en": "App logo is now the official Zigbee logo.",
     "nl": "App-logo is nu het officiële Zigbee-logo."
+  },
+  "0.1.4": {
+    "en": "App image with 20 different appliances.",
+    "nl": "App-afbeelding met 20 verschillende apparaten."
   }
 }
