@@ -58,9 +58,9 @@
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
-  "source": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
-  "homepage": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor",
+  "source": "https://github.com/sanderjacobsen/zigbeemonitor",
+  "homepage": "https://github.com/sanderjacobsen/zigbeemonitor",
   "bugs": {
-    "url": "https://github.com/sanderjacobsen/nl.jacobsen.zigbeemonitor/issues"
+    "url": "https://github.com/sanderjacobsen/zigbeemonitor/issues"
   }
 }
