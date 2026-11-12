@@ -35,7 +35,7 @@ ELSE  Notification "repaired by restarting the app"
 
 ## Installation
 
-Homey App Store (test): search for *Zigbee Monitor*. Works on Homey Pro (2023 or later), Homey Pro mini and Homey Self-Hosted Server.
+Homey App Store (test): https://homey.app/a/nl.jacobsen.zigbeemonitor/test/ Works on Homey Pro (2023 or later), Homey Pro mini and Homey Self-Hosted Server.
 
 ```bash
 npm install -g homey && npm install
@@ -50,7 +50,7 @@ npm test            # unit tests
 
 ## Support
 
-Questions, ideas or bugs? Open an [issue](https://github.com/sanderjacobsen/zigbeemonitor/issues).
+Questions, ideas or bugs? Reply in the [Homey Community topic](https://community.homey.app/t/app-pro-shs-zigbee-monitor-notice-and-repair-unresponsive-zigbee-routers-automatically/162152) or open an [issue](https://github.com/sanderjacobsen/zigbeemonitor/issues).
 Like the app? [Buy me a coffee](https://ko-fi.com/sanderjacobsen) ☕
 
 ---

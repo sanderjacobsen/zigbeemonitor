@@ -64,6 +64,7 @@
   "bugs": {
     "url": "https://github.com/sanderjacobsen/zigbeemonitor/issues"
   },
+  "support": "https://community.homey.app/t/app-pro-shs-zigbee-monitor-notice-and-repair-unresponsive-zigbee-routers-automatically/162152",
   "flow": {
     "triggers": [
       {

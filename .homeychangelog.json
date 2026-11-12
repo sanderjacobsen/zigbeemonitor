@@ -24,7 +24,7 @@
     "nl": "Klaar voor de App Store: nieuwe afbeelding voor het overzichtsapparaat, kortere beschrijving."
   },
   "0.2.1": {
-    "en": "Zigbee logo in the image of the overview device.",
-    "nl": "Zigbee-logo in de afbeelding van het overzichtsapparaat."
+    "en": "Zigbee logo in the image of the overview device, support link to the Homey Community topic.",
+    "nl": "Zigbee-logo in de afbeelding van het overzichtsapparaat, supportlink naar het topic op het Homey-forum."
   }
 }
