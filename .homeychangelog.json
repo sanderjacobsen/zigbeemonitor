@@ -22,5 +22,9 @@
   "0.2.0": {
     "en": "Ready for the App Store: new image for the overview device, shorter description.",
     "nl": "Klaar voor de App Store: nieuwe afbeelding voor het overzichtsapparaat, kortere beschrijving."
+  },
+  "0.2.1": {
+    "en": "Zigbee logo in the image of the overview device.",
+    "nl": "Zigbee-logo in de afbeelding van het overzichtsapparaat."
   }
 }
