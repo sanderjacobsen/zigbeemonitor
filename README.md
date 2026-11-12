@@ -1,3 +1,5 @@
+[![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-FF5E5B?style=flat&logo=ko-fi&logoColor=white)](https://ko-fi.com/sanderjacobsen)
+
 # Zigbee Monitor — Homey App
 
 Keeps an eye on your **Zigbee routers** — the mains-powered lamps, plugs and relays that pass on the signals of your other Zigbee devices — and lets a flow **repair** a router that stopped responding, before you notice.
@@ -45,6 +47,13 @@ npm test            # unit tests
 
 - The app uses the Homey Web API (`homey:manager:api`) to find the routers and send them their current state. No cloud, everything stays on your Homey
 - Most lamps and plugs ignore a command that does not change anything. If a device reacts to it anyway, switch off monitoring for that router in the settings
+
+## Support
+
+Questions, ideas or bugs? Open an [issue](https://github.com/sanderjacobsen/zigbeemonitor/issues).
+Like the app? [Buy me a coffee](https://ko-fi.com/sanderjacobsen) ☕
+
+---
 
 ## Credits
 
