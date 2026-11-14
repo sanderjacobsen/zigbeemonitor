@@ -5,6 +5,7 @@ const { HomeyAPI } = require('homey-api');
 const { initialState, apply, probeCapability } = require('./lib/monitor');
 
 const ANY = '*';
+const BUILT_IN = 'homey';
 const PROBE_TIMEOUT_MS = 15000;
 const RETEST_MS = 60 * 1000; // a router that failed once is re-tested after a minute
 const GAP_MS = 2000; // between routers, so the mesh is not flooded
@@ -56,18 +57,32 @@ class ZigbeeMonitorApp extends Homey.App {
 
   // ---------- routers ----------
 
+  // 'homey:app:<appId>:<driver>' for app drivers; Homey's own Zigbee drivers have no app ('homey:<virtualdriver…>:<driver>').
   appIdOf(device) {
-    return String(device.driverId || '').split(':')[2] || '';
+    const parts = String(device.driverId || '').split(':');
+    return parts[1] === 'app' ? parts[2] || '' : BUILT_IN;
   }
 
   appName(appId) {
-    return APP_NAMES[appId] || appId;
+    if (appId === BUILT_IN) return this.homey.__('app.built_in');
+    return (this._appNames && this._appNames[appId]) || APP_NAMES[appId] || appId;
+  }
+
+  // Real app names from Homey when the API allows it (falls back to the list above and the app id).
+  async _loadAppNames(api) {
+    if (this._appNames) return;
+    this._appNames = {};
+    try {
+      const apps = await api.apps.getApps();
+      for (const a of Object.values(apps)) if (a && a.id && a.name) this._appNames[a.id] = typeof a.name === 'object' ? a.name.en || Object.values(a.name)[0] : a.name;
+    } catch (err) { /* no access to the app list: use the built-in names */ }
   }
 
   // All mains-powered Zigbee devices (routers), from any app: Homey marks them with zb_device_type = router.
   async getRouters() {
     const api = await this.getApi();
     const [devices, zones] = await Promise.all([api.devices.getDevices(), api.zones.getZones().catch(() => ({}))]);
+    await this._loadAppNames(api);
     const cfg = this.config();
     return Object.values(devices)
       .filter(d => d.settings && d.settings.zb_device_type === 'router')
@@ -82,8 +97,9 @@ class ZigbeeMonitorApp extends Homey.App {
           product: d.settings.zb_product_id || '',
           capability: probeCapability(d.capabilitiesObj),
           available: d.available !== false,
-          monitored: cfg.monitored ? cfg.monitored.includes(d.id) : true,
-          state: { ...initialState(), ...(this.states[d.id] || {}) },
+          // A router without on/off or dimmer cannot be tested: never monitored, never in alarm.
+          monitored: probeCapability(d.capabilitiesObj) ? (cfg.monitored ? cfg.monitored.includes(d.id) : true) : false,
+          state: probeCapability(d.capabilitiesObj) ? { ...initialState(), ...(this.states[d.id] || {}) } : initialState(),
         };
       })
       .sort((a, b) => a.appName.localeCompare(b.appName) || a.zone.localeCompare(b.zone) || a.name.localeCompare(b.name));
@@ -110,6 +126,11 @@ class ZigbeeMonitorApp extends Homey.App {
   }
 
   async testRouter(router) {
+    // Nothing to test with: leave it out (an old alarm state of such a router is cleared).
+    if (!router.capability) {
+      delete this.states[router.id];
+      return initialState();
+    }
     const result = await this.probe(router);
     const { state, event } = apply(this.states[router.id], result, Number(this.config().failsBeforeAlarm) || 2, Date.now());
     this.states[router.id] = state;

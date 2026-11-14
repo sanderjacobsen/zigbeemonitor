@@ -26,5 +26,9 @@
   "0.2.1": {
     "en": "Zigbee logo in the image of the overview device, support link to the Homey Community topic.",
     "nl": "Zigbee-logo in de afbeelding van het overzichtsapparaat, supportlink naar het topic op het Homey-forum."
+  },
+  "0.2.2": {
+    "en": "Routers without on/off or dimmer can't be tested: they are no longer monitored and no longer cause an alarm. Real app names, and Homey's own Zigbee drivers shown as 'Homey (built-in)'. Thanks to Drako74.",
+    "nl": "Routers zonder aan/uit of dimmer kunnen niet getest worden: ze worden niet meer bewaakt en geven geen alarm meer. Echte app-namen, en Homey's eigen Zigbee-drivers als 'Homey (ingebouwd)'. Met dank aan Drako74."
   }
 }

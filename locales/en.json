@@ -50,5 +50,8 @@
     "suspect": "just failed, testing again",
     "down": "does not respond",
     "unknown": "not tested yet"
+  },
+  "app": {
+    "built_in": "Homey (built-in)"
   }
 }

@@ -50,5 +50,8 @@
     "suspect": "reageerde net niet, wordt opnieuw getest",
     "down": "reageert niet",
     "unknown": "nog niet getest"
+  },
+  "app": {
+    "built_in": "Homey (ingebouwd)"
   }
 }
