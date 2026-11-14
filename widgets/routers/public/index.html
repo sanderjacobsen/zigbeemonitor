@@ -3,7 +3,9 @@
   <style>
     /* Same look as the Maintenance Monitor widget. Layout only; colours and fonts come from Homey's widget styleguide. */
     body { margin: 0; }
-    .ha-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+    /* Homey already shows the widget name above the widget: only a count line here, and only when there is something. */
+    .ha-head { display: flex; align-items: baseline; justify-content: flex-end; margin-bottom: 8px; }
+    .ha-head.hidden { display: none; }
     .ha-head .t { font-weight: var(--homey-font-weight-medium, 500); }
     .ha-head .c { font-size: 13px; color: var(--homey-text-color-light, #939496); }
     .ha-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--homey-line-color, rgba(128,128,128,.18)); }
@@ -27,7 +29,7 @@
   </style>
 </head>
 <body class="homey-widget">
-  <div class="ha-head"><span class="t" id="title"></span><span class="c" id="count"></span></div>
+  <div class="ha-head hidden" id="head"><span class="c" id="count"></span></div>
   <button class="ha-btn ha-all" id="all"></button>
   <div id="list"></div>
 
@@ -53,8 +55,8 @@
       const all = await H.api('GET', '/');
       const routers = onlyProblems ? all.filter(r => PROBLEM.includes(r.status)) : all;
       const down = all.filter(r => r.status === 'down').length;
-      document.getElementById('title').textContent = t('widget.title');
       document.getElementById('count').textContent = down ? t('widget.not_responding', { n: down }) : '';
+      document.getElementById('head').classList.toggle('hidden', !document.getElementById('count').textContent);
       document.getElementById('all').textContent = t('widget.test_all');
       document.getElementById('list').innerHTML = !routers.length
         ? `<div class="ha-empty">${esc(t(onlyProblems ? 'widget.empty_problems' : 'widget.empty_all'))}</div>`
