@@ -4,7 +4,7 @@
     "up": "📡 __device__ (__zone__) responds again."
   },
   "error": {
-    "no_capability": "This device has no on/off or dimmer to test with",
+    "no_capability": "This device has nothing to test with (no settable value)",
     "unavailable": "Device unavailable",
     "timeout": "No answer within 15 seconds",
     "not_found": "Router not found"
@@ -37,7 +37,7 @@
     "last_test": "tested",
     "no_routers": "No Zigbee routers found.",
     "no_results": "No routers found for '__query__'.",
-    "not_testable": "cannot be tested (no on/off or dimmer)",
+    "not_testable": "cannot be tested (no settable value)",
     "monitored": "monitored",
     "log": "Log",
     "log_empty": "No events yet.",

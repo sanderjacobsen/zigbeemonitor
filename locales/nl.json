@@ -4,7 +4,7 @@
     "up": "📡 __device__ (__zone__) reageert weer."
   },
   "error": {
-    "no_capability": "Dit apparaat heeft geen aan/uit of dimmer om mee te testen",
+    "no_capability": "Dit apparaat heeft niets om mee te testen (geen instelbare waarde)",
     "unavailable": "Apparaat niet beschikbaar",
     "timeout": "Geen antwoord binnen 15 seconden",
     "not_found": "Router niet gevonden"
@@ -37,7 +37,7 @@
     "last_test": "getest",
     "no_routers": "Geen Zigbee-routers gevonden.",
     "no_results": "Geen routers gevonden voor '__query__'.",
-    "not_testable": "kan niet getest worden (geen aan/uit of dimmer)",
+    "not_testable": "kan niet getest worden (geen instelbare waarde)",
     "monitored": "bewaakt",
     "log": "Logboek",
     "log_empty": "Nog geen gebeurtenissen.",
