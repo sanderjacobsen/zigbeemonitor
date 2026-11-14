@@ -68,6 +68,11 @@ class ZigbeeMonitorApp extends Homey.App {
     return (this._appNames && this._appNames[appId]) || APP_NAMES[appId] || appId;
   }
 
+  _title(t) {
+    if (!t || typeof t !== 'object') return t || '';
+    return t[this.homey.i18n.getLanguage()] || t.en || Object.values(t)[0] || '';
+  }
+
   // Real app names from Homey when the API allows it (falls back to the list above and the app id).
   async _loadAppNames(api) {
     if (this._appNames) return;
@@ -96,6 +101,7 @@ class ZigbeeMonitorApp extends Homey.App {
           appName: this.appName(appId),
           product: d.settings.zb_product_id || '',
           capability: probeCapability(d.capabilitiesObj),
+          capabilityTitle: probeCapability(d.capabilitiesObj) ? this._title(d.capabilitiesObj[probeCapability(d.capabilitiesObj)].title) : null,
           available: d.available !== false,
           // A router without on/off or dimmer cannot be tested: never monitored, never in alarm.
           monitored: probeCapability(d.capabilitiesObj) ? (cfg.monitored ? cfg.monitored.includes(d.id) : true) : false,

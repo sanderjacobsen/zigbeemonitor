@@ -80,7 +80,8 @@
   function meta(r) {
     if (!r.capability) return `<div class="meta">${esc([r.zone, t('settings.not_testable')].filter(Boolean).join(' · '))}</div>`;
     const s = r.state || {};
-    const parts = [r.zone, r.product];
+    // Tested with something else than on/off or dim: say with what (chosen automatically).
+    const parts = [r.zone, r.product, r.capabilityTitle && !['onoff', 'dim'].includes(r.capability) ? t('settings.via', { cap: r.capabilityTitle }) : null];
     if (busy.has(r.id)) parts.push(t('settings.testing'));
     else if (s.lastCheck) parts.push(`${t('settings.last_test')} ${time(s.lastCheck)}${s.lastMs != null && s.status === 'ok' ? ` (${(s.lastMs / 1000).toFixed(1)} s)` : ''}`);
     else parts.push(t('settings.never'));

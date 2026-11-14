@@ -43,7 +43,8 @@
     "log_empty": "Nog geen gebeurtenissen.",
     "saved": "Opgeslagen",
     "repair": "Automatisch herstellen",
-    "repair_text": "Maak een Advanced Flow: 'Een router van [app] reageert niet' → Homey's kaart 'Herstart app' (Systeem › Apps) → wacht 30 seconden → voorwaarde '[router] reageert'. Reageert hij nog niet: 'Zigbee Monitor draait langer dan 60 minuten' → 'Herstart Homey' (Systeem). Apps mogen andere apps of Homey zelf niet herstarten, daarom gebeurt dat in een flow."
+    "repair_text": "Maak een Advanced Flow: 'Een router van [app] reageert niet' → Homey's kaart 'Herstart app' (Systeem › Apps) → wacht 30 seconden → voorwaarde '[router] reageert'. Reageert hij nog niet: 'Zigbee Monitor draait langer dan 60 minuten' → 'Herstart Homey' (Systeem). Apps mogen andere apps of Homey zelf niet herstarten, daarom gebeurt dat in een flow.",
+    "via": "getest via __cap__"
   },
   "status": {
     "ok": "reageert",
@@ -52,6 +53,6 @@
     "unknown": "nog niet getest"
   },
   "app": {
-    "built_in": "Homey (ingebouwd)"
+    "built_in": "Homey"
   }
 }

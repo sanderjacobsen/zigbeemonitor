@@ -43,7 +43,8 @@
     "log_empty": "No events yet.",
     "saved": "Saved",
     "repair": "Repair automatically",
-    "repair_text": "Create an Advanced Flow: 'A router of [app] does not respond' → Homey's 'Restart app' card (System › Apps) → wait 30 seconds → condition '[router] responds'. Still not responding: 'Zigbee Monitor is running longer than 60 minutes' → 'Restart Homey' (System). Apps are not allowed to restart other apps or Homey itself, so this is done in a flow."
+    "repair_text": "Create an Advanced Flow: 'A router of [app] does not respond' → Homey's 'Restart app' card (System › Apps) → wait 30 seconds → condition '[router] responds'. Still not responding: 'Zigbee Monitor is running longer than 60 minutes' → 'Restart Homey' (System). Apps are not allowed to restart other apps or Homey itself, so this is done in a flow.",
+    "via": "tested via __cap__"
   },
   "status": {
     "ok": "responds",
@@ -52,6 +53,6 @@
     "unknown": "not tested yet"
   },
   "app": {
-    "built_in": "Homey (built-in)"
+    "built_in": "Homey"
   }
 }
