@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "nl.jacobsen.zigbeemonitor",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "platforms": [
@@ -471,6 +471,69 @@
       "id": "overview"
     }
   ],
+  "widgets": {
+    "routers": {
+      "name": {
+        "en": "Zigbee routers",
+        "nl": "Zigbee-routers"
+      },
+      "height": 240,
+      "transparent": false,
+      "settings": [
+        {
+          "id": "show",
+          "type": "dropdown",
+          "title": {
+            "en": "Show",
+            "nl": "Toon"
+          },
+          "value": "all",
+          "values": [
+            {
+              "id": "all",
+              "title": {
+                "en": "All monitored routers",
+                "nl": "Alle bewaakte routers"
+              }
+            },
+            {
+              "id": "problems",
+              "title": {
+                "en": "Only routers with a problem",
+                "nl": "Alleen routers met een probleem"
+              }
+            }
+          ]
+        },
+        {
+          "id": "max",
+          "type": "number",
+          "title": {
+            "en": "Maximum number of routers",
+            "nl": "Maximaal aantal routers"
+          },
+          "value": 8,
+          "min": 1,
+          "max": 50
+        }
+      ],
+      "api": {
+        "getRouters": {
+          "method": "GET",
+          "path": "/"
+        },
+        "testRouter": {
+          "method": "POST",
+          "path": "/test"
+        },
+        "testAll": {
+          "method": "POST",
+          "path": "/test-all"
+        }
+      },
+      "id": "routers"
+    }
+  },
   "capabilities": {
     "alarm_zigbee": {
       "type": "boolean",

@@ -13,6 +13,7 @@ Keeps an eye on your **Zigbee routers** — the mains-powered lamps, plugs and r
 - Works with routers of **any app**: Homey marks mains-powered Zigbee devices as routers, e.g. Philips Hue without bridge, IKEA Home smart, Aqara & Xiaomi, Tuya, SONOFF, Innr
 - In the app settings you choose which routers to monitor, the interval and the notifications, and see a log of all events
 - One **overview device** with a red dot when a router does not respond
+- A **dashboard widget** with your routers, their status and a *Test* button per router, plus *Test all* — show all routers or only the ones with a problem
 
 ## Repairing with a flow
 

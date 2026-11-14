@@ -54,5 +54,16 @@
   },
   "app": {
     "built_in": "Homey"
+  },
+  "widget": {
+    "title": "Zigbee routers",
+    "test_all": "Test all",
+    "test": "Test",
+    "testing": "…",
+    "empty_all": "No routers monitored",
+    "empty_problems": "All routers respond 👍",
+    "more": "+ __n__ more",
+    "not_responding": "__n__ not responding",
+    "last_test": "tested __time__"
   }
 }

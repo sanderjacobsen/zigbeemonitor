@@ -30,5 +30,9 @@
   "0.2.2": {
     "en": "Routers without on/off or dimmer are now tested automatically with another safe settable value (e.g. an LED indicator or a mode); the list shows which one. Routers with nothing to test with are no longer monitored and no longer cause an alarm. Real app names, and Homey's own Zigbee drivers shown as 'Homey'. Thanks to Drako74.",
     "nl": "Routers zonder aan/uit of dimmer worden nu automatisch getest met een andere veilige instelbare waarde (bijv. een LED-indicator of een modus); de lijst toont welke. Routers zonder iets om mee te testen worden niet meer bewaakt en geven geen alarm meer. Echte app-namen, en Homey's eigen Zigbee-drivers als 'Homey'. Met dank aan Drako74."
+  },
+  "0.3.0": {
+    "en": "New dashboard widget: your routers with their status and a Test button, and a Test all button at the top. Show all routers or only the ones with a problem. Routers that cannot be tested no longer show a Test button. Thanks to Drako74 for the idea.",
+    "nl": "Nieuwe dashboardwidget: je routers met hun status en een knop Test, en bovenaan een knop Alles testen. Toon alle routers of alleen die met een probleem. Routers die niet getest kunnen worden hebben geen knop Test meer. Met dank aan Drako74 voor het idee."
   }
 }

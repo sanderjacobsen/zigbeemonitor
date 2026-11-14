@@ -1,0 +1,92 @@
+<html>
+<head>
+  <style>
+    /* Same look as the Maintenance Monitor widget. Layout only; colours and fonts come from Homey's widget styleguide. */
+    body { margin: 0; }
+    .ha-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+    .ha-head .t { font-weight: var(--homey-font-weight-medium, 500); }
+    .ha-head .c { font-size: 13px; color: var(--homey-text-color-light, #939496); }
+    .ha-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--homey-line-color, rgba(128,128,128,.18)); }
+    .ha-row:first-of-type { border-top: none; }
+    .ha-icon { flex: 0 0 auto; width: 30px; height: 30px; background-color: var(--homey-text-color, currentColor);
+      -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+    .ha-txt { flex: 1; min-width: 0; }
+    .ha-task { font-size: 14px; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ha-sub { font-size: 12px; line-height: 16px; color: var(--homey-text-color-light, #939496); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ha-state { flex: 0 0 auto; width: 20px; height: 20px; }
+    /* Homey's primary button look, defined here so it does not depend on the widget styleguide. */
+    .ha-btn { all: unset; flex: 0 0 auto; box-sizing: border-box; height: 32px; padding: 0 16px; border-radius: 16px; cursor: pointer; text-align: center;
+      font-size: 14px; font-weight: var(--homey-font-weight-medium, 500); line-height: 32px; color: #fff;
+      background: linear-gradient(90deg, var(--homey-color-blue, #0082fa), #3fa9ff); box-shadow: 0 2px 6px rgba(0, 130, 250, .3);
+      -webkit-tap-highlight-color: transparent; }
+    .ha-btn:active { opacity: .8; }
+    .ha-btn.busy { opacity: .6; pointer-events: none; }
+    .ha-all { display: block; width: 100%; height: 40px; line-height: 40px; border-radius: 20px; font-size: 15px; margin-bottom: 6px; }
+    .ha-empty { padding: 12px 0; text-align: center; color: var(--homey-text-color-light, #939496); font-size: 14px; }
+    .ha-more { font-size: 12px; color: var(--homey-text-color-light, #939496); padding-top: 6px; }
+  </style>
+</head>
+<body class="homey-widget">
+  <div class="ha-head"><span class="t" id="title"></span><span class="c" id="count"></span></div>
+  <button class="ha-btn ha-all" id="all"></button>
+  <div id="list"></div>
+
+  <script type="text/javascript">
+    const PROBLEM = ['suspect', 'down'];
+    const STATE_ICON = {
+      ok: '<circle cx="12" cy="12" r="11" fill="#3fc700"/><path d="m7 12.3 3.2 3.2L17 8.7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+      suspect: '<circle cx="12" cy="12" r="11" fill="#f5a623"/><path d="M12 6.8V12l3.4 2.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+      down: '<circle cx="12" cy="12" r="11" fill="#d81c1d"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.4" fill="#fff"/>',
+      unknown: '<circle cx="12" cy="12" r="11" fill="#b4b4b4"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.3" fill="#fff"/>',
+    };
+    // Default icon (a router with signal arcs) for devices without an icon of their own.
+    const DEFAULT_ICON = `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round"><path d="M8.5 9.5a5 5 0 0 1 7 0M6 7a8.5 8.5 0 0 1 12 0"/><circle cx="12" cy="12.5" r="1.4" fill="#000"/><path d="M12 14v6"/></svg>')}`;
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let H;
+    const t = (k, v) => H.__(k, v);
+    const time = ms => new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    async function load() {
+      const settings = H.getSettings() || {};
+      const onlyProblems = settings.show === 'problems';
+      const max = Number(settings.max) || 8;
+      const all = await H.api('GET', '/');
+      const routers = onlyProblems ? all.filter(r => PROBLEM.includes(r.status)) : all;
+      const down = all.filter(r => r.status === 'down').length;
+      document.getElementById('title').textContent = t('widget.title');
+      document.getElementById('count').textContent = down ? t('widget.not_responding', { n: down }) : '';
+      document.getElementById('all').textContent = t('widget.test_all');
+      document.getElementById('list').innerHTML = !routers.length
+        ? `<div class="ha-empty">${esc(t(onlyProblems ? 'widget.empty_problems' : 'widget.empty_all'))}</div>`
+        : routers.slice(0, max).map(r => `<div class="ha-row">
+            <span class="ha-icon" style="--icon:url('${r.iconUri || DEFAULT_ICON}')"></span>
+            <div class="ha-txt"><div class="ha-task">${esc(r.name)}</div><div class="ha-sub">${esc([r.zone, r.lastCheck ? t('widget.last_test', { time: time(r.lastCheck) }) : null].filter(Boolean).join(' · '))}</div></div>
+            <svg class="ha-state" viewBox="0 0 24 24"><title>${esc(t('status.' + r.status))}</title>${STATE_ICON[r.status] || STATE_ICON.unknown}</svg>
+            <button class="ha-btn ha-test" data-id="${esc(r.id)}">${esc(t('widget.test'))}</button>
+          </div>`).join('') + (routers.length > max ? `<div class="ha-more">${esc(t('widget.more', { n: routers.length - max }))}</div>` : '');
+      H.ready({ height: document.body.scrollHeight });
+    }
+
+    async function busy(btn, fn) {
+      const label = btn.textContent;
+      btn.classList.add('busy');
+      btn.textContent = t('widget.testing');
+      try { await fn(); } catch (err) { console.error(err); }
+      btn.classList.remove('busy');
+      btn.textContent = label;
+      await load();
+    }
+
+    function onHomeyReady(Homey) {
+      H = Homey;
+      document.getElementById('all').addEventListener('click', ev => busy(ev.currentTarget, () => H.api('POST', '/test-all', {})));
+      document.getElementById('list').addEventListener('click', ev => {
+        const btn = ev.target.closest('.ha-test');
+        if (btn) busy(btn, () => H.api('POST', '/test', { id: btn.dataset.id }));
+      });
+      load().catch(err => { console.error(err); H.ready(); });
+      setInterval(() => load().catch(() => {}), 5 * 60 * 1000);
+    }
+  </script>
+</body>
+</html>

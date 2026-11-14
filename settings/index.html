@@ -109,7 +109,7 @@
           <label class="homey-form-checkbox"><input class="homey-form-checkbox-input" type="checkbox" data-act="monitor" ${r.monitored ? 'checked' : ''} ${r.capability ? '' : 'disabled'} /><span class="homey-form-checkbox-checkmark"></span></label>
           <div><div class="title">${esc(r.name)}</div>${meta(r)}</div>
           ${r.monitored && r.capability ? stateIcon(r.state.status) : '<span></span>'}
-          <button class="homey-button-secondary-small-shadow" data-act="test" ${r.capability && !busy.has(r.id) ? '' : 'disabled'}>${esc(t('settings.test'))}</button>
+          ${r.capability ? `<button class="homey-button-secondary-small-shadow" data-act="test" ${busy.has(r.id) ? 'disabled' : ''}>${esc(t('settings.test'))}</button>` : '<span></span>'}
         </div>`).join('')}
       </div>`;
     }).join('') + `<div class="ha-card ha-legend">${['ok', 'suspect', 'down', 'unknown'].map(s => `<span>${stateIcon(s)}${esc(t('status.' + s))}</span>`).join('')}</div>`;

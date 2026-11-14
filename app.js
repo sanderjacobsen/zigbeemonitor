@@ -73,6 +73,28 @@ class ZigbeeMonitorApp extends Homey.App {
     return t[this.homey.i18n.getLanguage()] || t.en || Object.values(t)[0] || '';
   }
 
+  // The icon Homey shows for a device (the one picked by the user, else the driver icon), as data URI. Cached.
+  async getDeviceIcon(deviceId) {
+    this._icons = this._icons || new Map();
+    const cached = this._icons.get(deviceId);
+    if (cached && Date.now() - cached.at < (cached.uri ? 6 * 3600 * 1000 : 600 * 1000)) return cached.uri;
+    let uri = null;
+    try {
+      const api = await this.getApi();
+      const device = await api.devices.getDevice({ id: deviceId });
+      const base = String(await this.homey.api.getLocalUrl()).replace(/\/$/, '');
+      const paths = [device.iconOverride ? `/web/img/devices/${encodeURIComponent(device.iconOverride)}.svg` : null, device.iconObj && device.iconObj.url].filter(Boolean);
+      for (const p of paths) {
+        const res = await fetch(base + p, { signal: AbortSignal.timeout(5000) }).catch(() => null);
+        if (!res || !res.ok || !/svg/.test(res.headers.get('content-type') || '')) continue;
+        const svg = await res.text();
+        if (svg.includes('<svg') && svg.length < 200 * 1024) { uri = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`; break; }
+      }
+    } catch (err) { /* no icon: the widget shows a default */ }
+    this._icons.set(deviceId, { uri, at: Date.now() });
+    return uri;
+  }
+
   // Real app names from Homey when the API allows it (falls back to the list above and the app id).
   async _loadAppNames(api) {
     if (this._appNames) return;
