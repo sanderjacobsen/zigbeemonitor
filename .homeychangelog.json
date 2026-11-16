@@ -38,5 +38,9 @@
   "0.4.0": {
     "en": "Overview device: new value 'Last test round' with time and result, updated after every round (so watchdog apps see it is alive). New trigger 'A test round has finished'.",
     "nl": "Overzichtsapparaat: nieuwe waarde 'Laatste testronde' met tijd en uitkomst, na elke ronde bijgewerkt (zodat bewakingsapps zien dat hij leeft). Nieuwe trigger 'Een testronde is klaar'."
+  },
+  "0.4.1": {
+    "en": "New icon for the overview device: a clipboard with the Zigbee logo and check marks.",
+    "nl": "Nieuw pictogram voor het overzichtsapparaat: een klembord met het Zigbee-logo en vinkjes."
   }
 }
