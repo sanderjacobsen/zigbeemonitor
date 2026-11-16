@@ -42,5 +42,9 @@
   "0.4.1": {
     "en": "New icon for the overview device: a clipboard with the Zigbee logo and check marks.",
     "nl": "Nieuw pictogram voor het overzichtsapparaat: een klembord met het Zigbee-logo en vinkjes."
+  },
+  "0.4.2": {
+    "en": "Overview device icon: more room at the bottom of the clipboard.",
+    "nl": "Pictogram overzichtsapparaat: meer ruimte onderaan het klembord."
   }
 }
