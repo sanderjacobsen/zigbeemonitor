@@ -1,7 +1,7 @@
 {
   "name": { "en": "Zigbee Monitor (overview)", "nl": "Zigbee Monitor (overzicht)" },
   "class": "sensor",
-  "capabilities": ["alarm_zigbee", "zigbee_down", "zigbee_monitored", "zigbee_last"],
+  "capabilities": ["alarm_zigbee", "zigbee_down", "zigbee_monitored", "zigbee_last", "zigbee_checked"],
   "platforms": ["local"],
   "pair": [
     { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },

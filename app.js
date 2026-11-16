@@ -188,11 +188,26 @@ class ZigbeeMonitorApp extends Homey.App {
         await this.testRouter(router);
         await new Promise(resolve => this.homey.setTimeout(resolve, GAP_MS));
       }
+      await this._roundDone(routers).catch(err => this.error('Round summary failed:', err.message));
     } catch (err) {
       this.error('Round failed:', err.message);
     } finally {
       this._running = false;
     }
+  }
+
+  // Every round, also when nothing changed: the overview device shows it (and so stays "seen" by watchdog apps).
+  async _roundDone(routers) {
+    const round = {
+      t: Date.now(),
+      monitored: routers.length,
+      down: routers.filter(r => this.states[r.id] && this.states[r.id].status === 'down').length,
+    };
+    this.homey.settings.set('lastRound', round);
+    await this.updateOverview();
+    await this.homey.flow.getTriggerCard('round_done').trigger({
+      responding: round.monitored - round.down, not_responding: round.down, monitored: round.monitored,
+    });
   }
 
   // ---------- events ----------
@@ -234,9 +249,15 @@ class ZigbeeMonitorApp extends Homey.App {
         timeZone: this.homey.clock.getTimezone(), day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
       })})`
       : this.homey.__('overview.none');
+    const round = this.homey.settings.get('lastRound');
+    const checked = round
+      ? `${new Date(round.t).toLocaleString(this.homey.i18n.getLanguage(), {
+        timeZone: this.homey.clock.getTimezone(), day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+      })} · ${this.homey.__(round.down ? 'overview.round_down' : 'overview.round_ok', { down: round.down, total: round.monitored })}`
+      : this.homey.__('overview.no_round');
     for (const device of devices) {
       await device.setSummary({
-        alarm: down.length > 0, down: down.length, monitored: routers.length, last: lastText,
+        alarm: down.length > 0, down: down.length, monitored: routers.length, last: lastText, checked,
       });
     }
   }

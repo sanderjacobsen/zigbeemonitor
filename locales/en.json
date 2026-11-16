@@ -13,7 +13,10 @@
     "name": "Zigbee Monitor",
     "down": "Not responding",
     "up": "Responds again",
-    "none": "Nothing happened yet"
+    "none": "Nothing happened yet",
+    "round_ok": "all __total__ respond",
+    "round_down": "__down__ of __total__ not responding",
+    "no_round": "No round yet"
   },
   "flow": {
     "any_router": "All routers"

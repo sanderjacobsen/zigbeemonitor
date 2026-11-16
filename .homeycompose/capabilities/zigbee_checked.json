@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Last test round",
+    "nl": "Laatste testronde"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/capabilities/checked.svg"
+}

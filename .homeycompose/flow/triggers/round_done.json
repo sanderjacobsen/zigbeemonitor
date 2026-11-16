@@ -1,0 +1,39 @@
+{
+  "title": {
+    "en": "A test round has finished",
+    "nl": "Een testronde is klaar"
+  },
+  "hint": {
+    "en": "After every round, also when all routers respond. Use it to check that the monitoring itself keeps running.",
+    "nl": "Na elke ronde, ook als alle routers reageren. Handig om te controleren dat de bewaking zelf blijft draaien."
+  },
+  "tokens": [
+    {
+      "name": "responding",
+      "type": "number",
+      "title": {
+        "en": "Responding",
+        "nl": "Reageren"
+      },
+      "example": 37
+    },
+    {
+      "name": "not_responding",
+      "type": "number",
+      "title": {
+        "en": "Not responding",
+        "nl": "Reageren niet"
+      },
+      "example": 0
+    },
+    {
+      "name": "monitored",
+      "type": "number",
+      "title": {
+        "en": "Monitored routers",
+        "nl": "Bewaakte routers"
+      },
+      "example": 37
+    }
+  ]
+}
